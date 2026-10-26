@@ -1,0 +1,19 @@
+{
+  "usuarios": [
+    {
+      "perfil": "Admin",
+      "email": "admin-pgats@test.com",
+      "senha": "*****"
+    },
+    {
+      "perfil": "Comum",
+      "email": "comum-pgats@test.com",
+      "senha": "*****"
+    },
+    {
+      "perfil": "Aluno",
+      "email": "aluno-pgats@test.com",
+      "senha": "*****"
+    }
+  ]
+}

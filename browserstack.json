@@ -1,0 +1,40 @@
+{
+    "auth": {
+        "username": "patriciadasilvag_gEKrbd",
+        "access_key": "26Hg3GFnzcTUZWFwnzyM"
+    },
+    "browsers": [
+        {
+            "browser": "chrome",
+            "os": "Windows 10",
+            "versions": [
+                "latest",
+                "latest-1"
+            ]
+        }
+    ],
+    "run_settings": {
+        "cypress_config_file": "./cypress.config.cjs",
+        "cypress_version": "12.17.4",
+        "project_name": "pgats-automacao-web-2026",
+        "build_name": "build-name",
+        "exclude": [],
+        "parallels": 1,
+        "npm_dependencies": {
+            "cypress": "12.17.4",
+            "cypress-xpath": "^2.0.1",
+            "cypress-mochawesome-reporter": "^5.0.0"
+        },
+        "auto_import_dev_dependencies": false,
+        "exclude_dependencies": [],
+        "package_config_options": {},
+        "headless": true
+    },
+    "connection_settings": {
+        "local": false,
+        "local_identifier": null,
+        "local_mode": null,
+        "local_config_file": null
+    },
+    "disable_usage_reporting": false
+}
