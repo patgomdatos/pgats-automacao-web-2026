@@ -52,7 +52,6 @@ describe('Automation Exercise', () => {
      * 1 - IA gerando asserções tradicionais
      */
 
-    cy.get('[data-qa="create-account"]').click()
     cy.get('[data-qa="account-created"]')
       .should('be.visible')
       .and('contain', 'Account Created!')

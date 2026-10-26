@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "browserstack-cypress-cli": "^1.37.2",
     "cypress": "^13.17.0",
     "cypress-xpath": "^2.0.1"
   },
