@@ -7,7 +7,7 @@ describe('Automation Exercise', () => {
   // cy.get() -> elementos baseados em css selector
   // cy.contains() -> elementos baseados em texto
 
-  it.only('Cadastrar um novo usuário com sucesso', () => {
+  it('Cadastrar um novo usuário com sucesso', () => {
     cy.visit('https://www.automationexercise.com')
     cy.get('a[href*=login]').click()
 

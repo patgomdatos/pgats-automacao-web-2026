@@ -4,6 +4,7 @@ const cadastro = require('../modules/cadastro/index')
 const login = require('../modules/login/index')
 const produtos = require('../modules/produtos/index')
 const subscricao = require('../modules/subscricao/index')
+const carrinho = require('../modules/carrinho/index')
 import { gerarEmailAleatorio } from '../modules/utilitarios/geracaoDados'
 
 describe('Automation Exercise', () => {
@@ -101,5 +102,32 @@ describe('Automation Exercise', () => {
     subscricao.verificarMensagemDeInscricaoComSucesso()
   });
 
+  it('15 - Realizar pedido: Cadastrar antes do Checkout', () => {
+    cy.visit('https://www.automationexercise.com')
+    subscricao.verificarHomePageVisivel()
+    cy.get('a[href*=login]').click()
+
+    cadastro.iniciarCadastro('PGATS Aut', `pgats-aut-test-${Date.now()}@mail.com`)
+
+    cy.fixture('dados/cadastro.json').then((usuario) => {
+      cadastro.preencherCadastro(usuario)
+      cadastro.verificarSeCadastroFoiEfetuadoComSucesso()
+      cadastro.continuarAposMensagem()
+      carrinho.verificarUsuarioLogado('PGATS Aut')
+
+      carrinho.adicionarProdutoAoCarrinho()
+      carrinho.acessarCarrinho()
+      carrinho.verificarPaginaDoCarrinho()
+      carrinho.prosseguirParaCheckout()
+      carrinho.verificarEnderecoERevisaoDoPedido(usuario)
+    })
+
+    cy.fixture('dados/pagamento.json').then((pagamento) => {
+      carrinho.inserirComentarioEFazerPedido(pagamento.comentario)
+      carrinho.preencherPagamento(pagamento)
+      carrinho.confirmarPagamento()
+      carrinho.verificarPedidoRealizadoComSucesso()
+    })
+  });
 });
 
