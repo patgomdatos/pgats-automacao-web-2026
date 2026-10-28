@@ -40,3 +40,11 @@ export function continuarAposMensagem() {
 export function excluirConta() {
   cy.get(seletores.excluirConta).click()
 }
+
+export function verificarSeMensagemDeCadastroExistenteFoiExibida() {
+  cy.get('form[action*=signup] p')
+    .should('exist')
+    .should('be.visible')
+    .should('contain', 'Email Address already exist!')
+    .and('contain.text', 'Email Address already exist!')
+}
