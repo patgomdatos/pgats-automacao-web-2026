@@ -7,10 +7,10 @@ export function preencherLogin(email, senha) {
   cy.get(seletores.botaoLogin).click()
 }
 
-export function verificarSeLoginFoiEfetuadoComSucesso() {
-  cy.contains('.navbar-nav li', 'PGATS Aut')
+export function verificarSeLoginFoiEfetuadoComSucesso(nome = 'PGATS Aut') {
+  cy.contains('.navbar-nav li', nome)
   cy.get('.navbar-nav li')
-    .contains('PGATS Aut')
+    .contains(nome)
     .should('be.visible')
 }
 
