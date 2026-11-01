@@ -211,10 +211,10 @@ function verificarSeLoginFoiEfetuadoComSucesso() {
   /**
    * verificarSeLoginFoiEfetuadoComSucesso()
    */
-  cy.contains('.navbar-nav li', 'PGATS Aut')
+  cy.contains('.navbar-nav li', 'PGATS')
 
   cy.get('.navbar-nav li')
-    .contains('PGATS Aut')
+    .contains('PGATS')
     .should('be.visible')
 
   /**

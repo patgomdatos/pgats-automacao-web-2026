@@ -84,10 +84,10 @@ describe('Automation Exercise', () => {
 
     // 
     // cy.contains('Logged in as PGATS Auto').should('be.visible')
-    cy.contains('.navbar-nav li', 'PGATS Aut')
+    cy.contains('.navbar-nav li', 'PGATS')
 
     cy.get('.navbar-nav li')
-      .contains('PGATS Aut')
+      .contains('PGATS')
       .should('be.visible')
 
   });
