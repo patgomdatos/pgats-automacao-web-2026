@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+﻿/// <reference types="cypress" />
 
 const cadastro = require('../modules/cadastro/index')
 const login = require('../modules/login/index')
@@ -39,27 +39,31 @@ describe('Automation Exercise', () => {
     cy.visit('https://www.automationexercise.com/login')
 
     // ACT
-    login.preencherLogin('pgats-aut-test-1791030872114@mail.com', '12345')
-    login.verificarSeLoginFoiEfetuadoComSucesso()
-
+    cy.fixture('dados/login.json').then((usuario) => {
+      login.preencherLogin(usuario.email, usuario.senha)
+      login.verificarSeLoginFoiEfetuadoComSucesso(usuario.nome)
+    })
   });
 
   it('3 - Efetuar Login de Usuário email e senha INCORRETOS', () => {
     cy.visit('https://www.automationexercise.com/login')
 
     // ACT
-    login.preencherLogin('pgats-aut-test-1791030872114@mail.com', '54321')
-    login.verificarSeMensagemDeErroFoiExibidaNoLogin()
+    cy.fixture('dados/login.json').then((usuario) => {
+      login.preencherLogin(usuario.email, usuario.senhaIncorreta)
+      login.verificarSeMensagemDeErroFoiExibidaNoLogin()
+    })
   });
 
   it('4 - Efetuar Logout', () => {
     cy.visit('https://www.automationexercise.com/login')
 
     // ACT
-    login.preencherLogin('pgats-aut-test-1791030872114@mail.com', '12345')
-    login.efetuarLogout()
-    login.verificarSeOUsuarioFoiDeslogado()
-
+    cy.fixture('dados/login.json').then((usuario) => {
+      login.preencherLogin(usuario.email, usuario.senha)
+      login.efetuarLogout()
+      login.verificarSeOUsuarioFoiDeslogado()
+    })
   });
 
   it('5 - Tentar cadastrar usuário com e-mail já cadastrado', () => {
@@ -68,8 +72,10 @@ describe('Automation Exercise', () => {
 
     // const timestamp = new Date().getTime()
 
-    cadastro.iniciarCadastro('PGATS Aut', `pgats-aut-test-1791030872114@mail.com`)
-    cadastro.verificarSeMensagemDeCadastroExistenteFoiExibida()
+    cy.fixture('dados/login.json').then((usuario) => {
+      cadastro.iniciarCadastro('PGATS Aut', usuario.email)
+      cadastro.verificarSeMensagemDeCadastroExistenteFoiExibida()
+    })
   });
 
     it('8 - Verificar pagina de todos os produtos e detalhe do produto', () => {
@@ -129,5 +135,32 @@ describe('Automation Exercise', () => {
       carrinho.verificarPedidoRealizadoComSucesso()
     })
   });
-});
 
+  it('16 - Realizar pedido: Login antes do Checkout', () => {
+    cy.visit('https://www.automationexercise.com')
+    subscricao.verificarHomePageVisivel()
+    cy.get('a[href*=login]').click()
+
+    cy.fixture('dados/login.json').then((conta) => {
+      login.preencherLogin(conta.email, conta.senha)
+      login.verificarSeLoginFoiEfetuadoComSucesso(conta.nome)
+      carrinho.verificarUsuarioLogado(conta.nome)
+    })
+
+    cy.fixture('dados/cadastro.json').then((usuario) => {
+
+      carrinho.adicionarProdutoAoCarrinho()
+      carrinho.acessarCarrinho()
+      carrinho.verificarPaginaDoCarrinho()
+      carrinho.prosseguirParaCheckout()
+      carrinho.verificarEnderecoERevisaoDoPedido(usuario)
+    })
+
+    cy.fixture('dados/pagamento.json').then((pagamento) => {
+      carrinho.inserirComentarioEFazerPedido(pagamento.comentario)
+      carrinho.preencherPagamento(pagamento)
+      carrinho.confirmarPagamento()
+      carrinho.verificarPedidoRealizadoComSucesso()
+    })
+  });
+});
